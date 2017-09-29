@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for mp3name in music_mp3/*; do
+	echo "$mp3name"
+	basename=$(basename "$mp3name" music_mp3/ | cut -d. -f1)
+	wavname=music_wav/$basename.wav
+	pngname=output/$basename.png
+	test ! -e "$wavname" && ffmpeg -i "$mp3name" -ac 1 "$out"
+	test ! -e "$pngname" && python3 wav_spectrogram.py "$wavname" "$pngname"
+done
